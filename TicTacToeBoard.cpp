@@ -4,6 +4,8 @@
  * to represent the spaces on the board.
 **/
 
+extern Piece please;
+
 //Constructor sets an empty board and specifies it is X's turn first
 TicTacToeBoard::TicTacToeBoard()
 {
@@ -19,10 +21,13 @@ TicTacToeBoard::TicTacToeBoard()
 **/
 Piece TicTacToeBoard::toggleTurn()
 {
-  if(turn == X)
-    turn = O;
-  else 
-    turn = X;
+  if(turn == X){
+    //return  turn=(Piece)((Piece)O|(Piece)O);
+    return O;
+    
+ }else 
+    return X;
+   // return Piece(turn=O);
   return Invalid;
 }
 
@@ -48,6 +53,7 @@ Piece TicTacToeBoard::placePiece(int row, int column)
     } else 
       return Invalid;
   }
+  return Invalid;
 }
 
 /**
@@ -74,14 +80,17 @@ Piece TicTacToeBoard::getPiece(int row, int column)
 **/
 Piece TicTacToeBoard::getWinner()
 {
+  static int i=0;
   Piece plays[BOARDSIZE][BOARDSIZE];
   for(int i=0; i<BOARDSIZE; i++) {
     for(int j=0; j<BOARDSIZE; j++) {
       plays[i][j] = getPiece(i,j);
+      
     }
   }
-  for(int i=0; i<plays.size(); i++) {
-    for(int j=0; j<plays.size(); j++) {
+ 
+  for(int i=0; i<BOARDSIZE; i++) {
+    for(int j=0; j<BOARDSIZE; j++) {
       if(plays[i][j]==turn && plays[i][j+1]==turn && plays[i][j+2]) return turn;
       else if(plays[i][j]==turn && plays[i+1][j]==turn && plays[i+2][j]) return turn;
       else if(plays[i][j]==turn && plays[i+1][j+1]==turn && plays[i+2][j+2]) return turn;
